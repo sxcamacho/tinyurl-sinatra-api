@@ -67,10 +67,16 @@ post '/data/shorten' do
   url_to_create = json_params["url"]
   existing_url = TinyUrl.find_by_url(url_to_create)
   unless existing_url.any?
+    
+    host_url = base_url
+    if Sinatra::Base.production?
+      host_url = ENV['API_URL_PRODUCTION']
+    end
+
     new_url = TinyUrl.new
     new_url.url = url_to_create
     new_url.tiny_id = SecureRandom.hex(4)
-    new_url.tiny_url = "#{base_url}/#{new_url.tiny_id}"
+    new_url.tiny_url = "#{host_url}/#{new_url.tiny_id}"
     halt 422, serialize_tiny_url(new_url) unless new_url.save
     serialize_tiny_url(new_url, 0)
   else
