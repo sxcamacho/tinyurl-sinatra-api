@@ -7,13 +7,14 @@ require './models/statistic'
 require './serializers/tiny_url_serializer'
 require './serializers/statistic_serializer'
 require './helpers'
-require 'dotenv'
+
+if Sinatra::Base.development?
+  require 'dotenv'
+  Dotenv.load('.env')
+end
 
 # DB Setup
 Mongoid.load! "mongoid.config"
-
-# Load ENV Variables
-Dotenv.load('.env')
 
 set :bind, '0.0.0.0'
 configure do
