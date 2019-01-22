@@ -1,5 +1,6 @@
 # server.rb
 require 'sinatra'
+require 'sinatra/reloader' if Sinatra::Base.development?
 require 'sinatra/cross_origin'
 require 'mongoid'
 require './models/tiny_url'
