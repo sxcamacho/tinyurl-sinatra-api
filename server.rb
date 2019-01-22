@@ -1,6 +1,7 @@
 # server.rb
 require 'sinatra'
 require 'sinatra/cross_origin'
+require 'open_uri_redirections'
 require 'mongoid'
 require './models/tiny_url'
 require './models/statistic'
@@ -28,8 +29,9 @@ end
 
 # Endpoints
 get '/' do
-  response.headers['Location'] = ENV['WEB_CLIENT_URL']
-  status 301
+  # response.headers['Location'] = ENV['WEB_CLIENT_URL']
+  # status 301
+  open(ENV['WEB_CLIENT_URL'], :allow_redirections => :all)
 end
 
 get '/:id' do |id|
@@ -46,8 +48,9 @@ get '/:id' do |id|
     puts "**********"
     status 500
   else
-    response.headers['Location'] = tiny_url.url
-    status 301
+    # response.headers['Location'] = tiny_url.url
+    # status 301
+    open(tiny_url.url, :allow_redirections => :all)
   end
 end
 
