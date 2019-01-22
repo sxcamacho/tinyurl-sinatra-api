@@ -28,8 +28,9 @@ end
 
 # Endpoints
 get '/' do
-  response.headers['Location'] = ENV['WEB_CLIENT_URL']
-  status 301
+  # response.headers['Location'] = ENV['WEB_CLIENT_URL']
+  # status 301
+  redirect ENV['WEB_CLIENT_URL']
 end
 
 get '/:id' do |id|
@@ -46,8 +47,9 @@ get '/:id' do |id|
     puts "**********"
     status 500
   else
-    response.headers['Location'] = tiny_url.url
-    status 301
+    # response.headers['Location'] = tiny_url.url
+    # status 301
+    redirect tiny_url.url
   end
 end
 
